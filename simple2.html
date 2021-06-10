@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>Chatアプリ</title>
+</head>
+<body>
+
+<!-- コンテンツ表示画面 -->
+
+<div>
+    <div>
+        名前：<input type="text" id="uname">
+    </div>
+    <div>
+        <textarea id="text" cols="30" rows="10"></textarea>
+        <button id="send">送信</button>
+    </div>
+    <div id="output" style="overflow: scroll; height: 300px;"></div>
+</div>
+
+
+<!--/ コンテンツ表示画面 -->
+<div>
+    <ul>
+        <li class="imgs" data-img="0"><img src="imgs/buku.png" width="100"></li>
+        <li class="imgs" data-img="1"><img src="imgs/tuku.jpg" width="100"></li>
+        <li class="imgs" data-img="2"><img src="imgs/caram.png" width="100"></li>
+    </ul>
+
+</div>
+
+
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- JQuery -->
+
+
+<!--** 以下Firebase **-->
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBOOnx1mvtm4sqoF6zmE5t0AqUi4W435nE",
+    authDomain: "gsdemo-f3b00.firebaseapp.com",
+    projectId: "gsdemo-f3b00",
+    storageBucket: "gsdemo-f3b00.appspot.com",
+    messagingSenderId: "893472762082",
+    appId: "1:893472762082:web:43aff7f4cb5416efb1d6bb"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  let newPostRef = firebase.database().ref(); //refの変数に入れないと打つのが面倒なので。
+
+  //アイコン処理
+
+  let d =0;
+  const img = ["buku.png","tuku.jpg","caram.png"];
+  $("imgs").on("click",function(){
+      d = $(this).athr("data-img");
+  });
+
+  //送信のクリックイベント
+  $("#send").on("click",function(){
+        newPostRef.push({
+            username:$("#username").val(),
+            text:$("#text").val(),
+            icon:d
+        });
+        $("#text").val("")
+  });
+
+  //受信イベント(1こづつ、10個→連続でループして10個取ります)
+  //"child added:毎回1こ、他にもあれば連続して取ってくれる", "value:毎回全てのデータを取得"
+  newPostRef.on("child_added",function(data){
+      let v = data.val();
+      let k = data.key;
+      let str = '<dl id ="'+k+'"><dt><img src="imgs/'+img[v.icon+'" width="50"><br>'+ v.username+'</dt><dd>'+v.text+'</dd></dl>';
+        
+  })
+  
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,87 @@
+.title{
+    text-align:center;
+    font-size: 25px;
+    width:100%;
+    background-color:ivory;
+    margin: 20px 0 20px 0;
+}
+body{
+    margin:0;
+    padding:0;
+    /* text-align:center; */
+    font-size: 10px;
+    width:100%;
+    background-color:#fff;
+}
+.sticky {
+    width: 250px;
+    height: 50px;
+    position: absolute;
+    cursor: pointer;
+    border: 1px solid #aaa;
+  }
+
+  textarea {
+    width: 100%;
+    height: 100%;
+  }
+
+  .selected {border-color: #f44;}
+
+  .top{
+    text-align:center;
+    font-size: 25px;
+    background-color:ivory;
+}
+
+.input{
+    display:flex;
+}
+
+.namebox{
+    padding: 15px 175px 10px 0;
+}
+
+
+.output{
+    background-color:whitesmoke;
+    font-size: 10px;
+    width: 600px;
+    padding: 0 20px 0 20px;
+    /* text-align:center; */
+}
+
+.sticky {
+    width: 250px;
+    height: 50px;
+    position: absolute;
+    cursor: pointer;
+    border: 1px solid #aaa;
+  }
+
+  textarea {
+    width: 400px;
+    height: 100%;
+  }
+
+  .selected {border-color: #f44;}
+
+.p_{    
+    background-color:ivory ;
+    color: gray;
+}
+
+.box_{
+    background-color: whitesmoke;
+    margin: 0 15px 0 15px;
+}
+
+.sticky_box{
+    text-align: center;
+}
+
+.sticky_area{
+    width: 100%;
+    height: 100%;
+    background-color: whitesmoke;
+}

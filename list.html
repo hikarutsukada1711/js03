@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>アイディアリスト</title>
+  <link rel="stylesheet" href="list.css" >
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+</head>
+<body>
+
+<h1>アイディアを確認</h1>
+
+    <ul>ブレストで出たアイディア一覧</ul>
+    <div id="output"></div>
+    <button onclick="location.href='hus2.html'">ブレストに戻る</button>
+
+    <canvas id="stage"></canvas>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script language="javascript" type="text/javascript">
+    // JSONデータの取得先
+
+var sticky = JSON.parse(localStorage.sticky);
+console.log(sticky);
+var s_length = sticky.length;
+console.log(s_length);
+
+for(var i in sticky){
+    $("#output").append("<ul>" + sticky[i].html + "</ul>");
+}
+
+//グラフ
+//「月別データ」
+var mydata = {
+  labels: ["アイディアの数", "チャットの数"],
+  datasets: [
+    {
+      label: '数量',
+      hoverBackgroundColor: "rgba(0,99,132,0.3)",
+      data: [s_length, 100],
+    }
+  ]
+};
+
+//「オプション設定」
+var options = {
+  title: {    
+    display: true,
+    text: 'サンプルチャート'
+  }
+};
+
+var canvas = document.getElementById('stage');
+var chart = new Chart(canvas, {
+
+  type: 'bar',  //グラフの種類
+  data: mydata,  //表示するデータ
+  options: options  //オプション設定
+
+}); 
+
+</script>
+</body>
+</html>

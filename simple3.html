@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+    <meta charset="utf-8">
+
+    <title>Chatアプリ</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+    <!-- <script src="js/jquery-2.1.3.min.js"></script> -->
+    <link rel="stylesheet" href="sample.css">
+
+
+</head>
+<body>
+
+<!-- コンテンツ表示画面 -->
+
+<h1 class="top">チャット アプリ</h1>
+
+<div>
+   <div class="input">
+        <div>
+            <div class="namebox">
+                名前：<input type="text" id="uname">
+            </div>
+
+            <div>
+                <textarea id="text" cols="30" rows="10"></textarea>
+                <button id="send">送信</button>
+            </div>
+        </div>
+
+        <div class="output" id="output" style="overflow: scroll; height: 300px;"></div>
+
+        <div>
+            <div class="namebox_">
+                名前：<input type="text" id="uname_">
+            </div>
+
+            <div>
+                <textarea id="text_" cols="30" rows="10"></textarea>
+                <button id="send_">送信</button>
+            </div>
+        </div>
+               
+    
+        
+
+
+    </div>
+
+    <!-- テスト -->
+    <div id="output_test" style="overflow: scroll; height: 300px;"></div> 
+
+
+    
+
+
+</div>
+
+<h1>アイディアを確認</h1>
+
+    <ul id="output_idea">ブレストで出たアイディア一覧</ul>
+    <button onclick="location.href='hus.html'">ブレストに戻る</button>
+
+
+<h1>円グラフ</h1>
+<canvas id="myPieChart"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+
+<!--/ コンテンツ表示画面 -->
+
+
+
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- JQuery -->
+
+
+<!--** 以下Firebase **-->
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+var sticky = JSON.parse(localStorage.sticky);
+
+for(var i in sticky){
+    $("#output_idea").append("<li>" + sticky[i].html + "</li>");
+}
+
+
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBOOnx1mvtm4sqoF6zmE5t0AqUi4W435nE",
+    authDomain: "gsdemo-f3b00.firebaseapp.com",
+    projectId: "gsdemo-f3b00",
+    storageBucket: "gsdemo-f3b00.appspot.com",
+    messagingSenderId: "893472762082",
+    appId: "1:893472762082:web:43aff7f4cb5416efb1d6bb"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  const ref = firebase.database().ref(); //refの変数に入れないと打つのが面倒なので。
+
+  //送信のクリックイベント
+  $("#send").on("click",function(){
+        const uname = $("#uname").val();//名前を取得→変数へ代入
+        const text  = $("#text").val(); //メッセージを取得→変数へ代入
+        const date  = new Date();
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        const dayofweek = date.getDay();
+        const dayname = ['日','月','火','水','木','金','土'];
+        const yobi = dayname[dayofweek];
+        const hour = date.getHours();
+        const minute = date.getMinutes();
+
+        const msg   = {
+            uname: uname,
+            text: text,
+            year: year,
+            month: month,
+            day: day,
+            yobi: yobi,
+            hour: hour,
+            minute: minute,
+        }
+        ref.push(msg); //送信処理。変数ref、それに接続してプッシュする。msgを
+  });
+  //送信処理2 enter キー
+  $("#text").on("keydown",function(e){
+       if(e.keyCode==13){
+
+      const uname = $("#uname").val();//名前を取得→変数へ代入
+        const text  = $("#text").val(); //メッセージを取得→変数へ代入
+        const date  = new Date();
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        const dayofweek = date.getDay();
+        const dayname = ['日','月','火','水','木','金','土'];
+        const yobi = dayname[dayofweek];
+        const hour = date.getHours();
+        const minute = date.getMinutes();
+
+        const msg   = {
+            uname: uname,
+            text: text,
+            year: year,
+            month: month,
+            day: day,
+            yobi: yobi,
+            hour: hour,
+            minute: minute,
+        }
+        ref.push(msg); //送信処理。変数ref、それに接続してプッシュする。msgを
+
+
+    }
+
+  })
+
+//送信ボックス右側ver
+  //送信のクリックイベント
+  $("#send_").on("click",function(){
+        const uname = $("#uname_").val();//名前を取得→変数へ代入
+        const text  = $("#text_").val(); //メッセージを取得→変数へ代入
+        const date  = new Date();
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        const dayofweek = date.getDay();
+        const dayname = ['日','月','火','水','木','金','土'];
+        const yobi = dayname[dayofweek];
+        const hour = date.getHours();
+        const minute = date.getMinutes();
+
+        const msg   = {
+            uname: uname,
+            text: text,
+            year: year,
+            month: month,
+            day: day,
+            yobi: yobi,
+            hour: hour,
+            minute: minute,
+        }
+        ref.push(msg); //送信処理。変数ref、それに接続してプッシュする。msgを
+  });
+  //送信処理2 enter キー
+  $("#text_").on("keydown",function(e){
+       if(e.keyCode==13){
+
+      const uname = $("#uname_").val();//名前を取得→変数へ代入
+        const text  = $("#text_").val(); //メッセージを取得→変数へ代入
+        const date  = new Date();
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        const dayofweek = date.getDay();
+        const dayname = ['日','月','火','水','木','金','土'];
+        const yobi = dayname[dayofweek];
+        const hour = date.getHours();
+        const minute = date.getMinutes();
+
+        const msg   = {
+            uname: uname,
+            text: text,
+            year: year,
+            month: month,
+            day: day,
+            yobi: yobi,
+            hour: hour,
+            minute: minute,
+        }
+        ref.push(msg); //送信処理。変数ref、それに接続してプッシュする。msgを
+
+
+    }
+
+  })
+
+
+
+
+  var count = 0;
+
+  //受信イベント(1こづつ、10個→連続でループして10個取ります)
+  //"child added:毎回1こ、他にもあれば連続して取ってくれる", "value:毎回全てのデータを取得"
+  ref.on("child_added",function(data){ //ここでのdataは受取用の変数。aならaでも良い。以下dataと呼応。
+    const v = data.val(); //オブジェクト変数を取得することができる 
+    const k = data.key;  //今回は使わないが、keyは削除とかに使う
+    const h = '<p>'+v.uname+'<br>'+v.text+'<br>'+v.year+'年'+v.month+'月'+v.day+'日'+v.yobi+v.hour+'時'+v.minute+'分'+'</p>'; //HTMLを文字で先に作る
+    $("#output").append(h); //divの中の一番下に挿入する関数
+    $('#output').animate({scrollTop: $('#output')[0].scrollHeight},'fast');
+    
+    //テストテスト
+    const i = v.uname;
+    let j = 0;
+    if(i==j){
+      count++;
+    }
+
+    $("#output_test").text(count);
+    // // console.log(count);
+    
+  });
+
+
+console.log(count);
+  //円グラフテスト
+
+  var ctx = document.getElementById("myPieChart");
+  var myPieChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ["A型", "O型", "B型", "AB型"],
+      datasets: [{
+          backgroundColor: [
+              "#BB5179",
+              "#FAFF67",
+              "#58A27C",
+              "#3C00FF"
+          ],
+          data: [38, 31, 21, 10]
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: '血液型 割合'
+      }
+    }
+  });
+
+
+</script>
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
